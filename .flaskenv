@@ -1,0 +1,2 @@
+FLASK_APP=BankApi.main
+FLASK_DEBUG=1
