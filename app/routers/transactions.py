@@ -47,7 +47,7 @@ def create_transaction(
             detail="Invalid transaction type. Must be: deposit, withdrawal, or transfer"
         )
     
-    # Check balance for withdrawals
+    # Update balance based on transaction type
     if trans_type == TransactionType.WITHDRAWAL:
         if account.balance < transaction.amount:
             raise HTTPException(
@@ -57,6 +57,14 @@ def create_transaction(
         account.balance -= transaction.amount
     elif trans_type == TransactionType.DEPOSIT:
         account.balance += transaction.amount
+    elif trans_type == TransactionType.TRANSFER:
+        # For now, treat transfer as withdrawal (implementation can be enhanced for inter-account transfers)
+        if account.balance < transaction.amount:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Insufficient balance for transfer"
+            )
+        account.balance -= transaction.amount
     
     # Create transaction
     db_transaction = Transaction(

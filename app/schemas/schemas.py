@@ -39,9 +39,16 @@ class TokenData(BaseModel):
 
 
 # Account schemas
+class AccountType(str):
+    """Valid account types."""
+    CHECKING = "checking"
+    SAVINGS = "savings"
+    BUSINESS = "business"
+
+
 class AccountBase(BaseModel):
     """Base account schema."""
-    account_type: str = Field(..., description="Type of account (checking, savings, etc.)")
+    account_type: str = Field(..., description="Type of account: checking, savings, or business")
     currency: str = Field(default="USD", max_length=3)
 
 

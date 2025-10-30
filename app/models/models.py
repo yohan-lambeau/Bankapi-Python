@@ -1,6 +1,6 @@
 """SQLAlchemy models for the banking API."""
-from datetime import datetime
-from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey, Enum
+from datetime import datetime, timezone
+from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey, Enum, func
 from sqlalchemy.orm import relationship
 import enum
 from .database import Base
@@ -22,7 +22,7 @@ class User(Base):
     email = Column(String, unique=True, index=True, nullable=False)
     hashed_password = Column(String, nullable=False)
     full_name = Column(String)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
     
     accounts = relationship("Account", back_populates="owner")
 
@@ -37,7 +37,7 @@ class Account(Base):
     balance = Column(Float, default=0.0)
     currency = Column(String, default="USD")
     user_id = Column(Integer, ForeignKey("users.id"))
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
     
     owner = relationship("User", back_populates="accounts")
     transactions = relationship("Transaction", back_populates="account")
@@ -52,6 +52,6 @@ class Transaction(Base):
     transaction_type = Column(Enum(TransactionType), nullable=False)
     amount = Column(Float, nullable=False)
     description = Column(String)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
     
     account = relationship("Account", back_populates="transactions")

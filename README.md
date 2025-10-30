@@ -153,6 +153,24 @@ ACCESS_TOKEN_EXPIRE_MINUTES=30
 DATABASE_URL=sqlite:///./bank.db
 ```
 
+### Production Deployment Notes
+
+⚠️ **IMPORTANT**: Before deploying to production:
+
+1. **Generate a secure secret key**:
+   ```bash
+   openssl rand -hex 32
+   ```
+   Set this value in your `.env` file or environment variables.
+
+2. **Configure CORS**: Update `app/main.py` to specify allowed origins instead of `["*"]`
+
+3. **Use a production database**: Replace SQLite with PostgreSQL or MySQL for production
+
+4. **Enable HTTPS**: Use a reverse proxy (nginx) with SSL certificates
+
+5. **Environment Variables**: Never commit secrets to version control. Use environment variables or secret management services.
+
 ## Project Structure
 
 ```

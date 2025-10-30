@@ -9,7 +9,8 @@ class Settings(BaseSettings):
     version: str = "1.0.0"
     description: str = "A secure REST API for banking operations"
     
-    # Security
+    # Security - IMPORTANT: Change these values in production!
+    # Generate a secure secret key with: openssl rand -hex 32
     secret_key: str = "your-secret-key-change-in-production-min-32-chars"
     algorithm: str = "HS256"
     access_token_expire_minutes: int = 30
