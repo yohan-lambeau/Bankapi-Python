@@ -10,8 +10,8 @@ class Account(Base):
     # Schéma de la table
     id = Column(Integer, primary_key=True, index=True,autoincrement=True)  # clé primaire
     client_id = Column(Integer, ForeignKey("clients.id"))  # identifiant du client (clé étrangère)
-    account_number = Column(String, unique=True, index=True)  # numéro de compte unique
-    balance = Column(Float, default=0)  # solde du compte
+    account_number = Column(String(35), unique=True, index=True)  # numéro de compte unique
+    balance = Column(Float, default=0.0)  # solde du compte
 
     # Persistance simple, à la manière d'un repository.save(...) en Spring
     def save(self):

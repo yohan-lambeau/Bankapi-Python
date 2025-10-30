@@ -9,8 +9,8 @@ class Client(Base):
 
     # Schéma de la table
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)  # clé primaire
-    nom = Column(String, index=True)                    # nom du client
-    email = Column(String, unique=True, index=True)     # email unique
+    nom = Column(String(length=100), index=True)                    # nom du client
+    email = Column(String(length=255), unique=True, index=True)     # email unique
     date_inscription = Column(DateTime(timezone=True), server_default=func.now())
 
     # Persistance simple, à la manière d'un repository.save(...) en Spring
